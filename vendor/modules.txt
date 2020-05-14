@@ -1,0 +1,30 @@
+# github.com/DataDog/zstd v1.4.5
+github.com/DataDog/zstd
+# github.com/alecthomas/kong v0.2.9
+github.com/alecthomas/kong
+# github.com/dustin/go-humanize v1.0.0
+github.com/dustin/go-humanize
+# github.com/golang/snappy v0.0.1
+github.com/golang/snappy
+# github.com/google/uuid v1.1.1
+github.com/google/uuid
+# github.com/klauspost/compress v1.9.8
+github.com/klauspost/compress/fse
+github.com/klauspost/compress/huff0
+github.com/klauspost/compress/snappy
+github.com/klauspost/compress/zstd
+github.com/klauspost/compress/zstd/internal/xxhash
+# github.com/pierrec/lz4 v2.0.5+incompatible
+github.com/pierrec/lz4
+github.com/pierrec/lz4/internal/xxh32
+# github.com/pkg/errors v0.8.1
+github.com/pkg/errors
+# github.com/segmentio/kafka-go v0.3.6
+github.com/segmentio/kafka-go
+github.com/segmentio/kafka-go/gzip
+github.com/segmentio/kafka-go/lz4
+github.com/segmentio/kafka-go/sasl
+github.com/segmentio/kafka-go/snappy
+github.com/segmentio/kafka-go/zstd
+# go.uber.org/atomic v1.6.0
+go.uber.org/atomic
