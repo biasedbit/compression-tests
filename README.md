@@ -1,7 +1,7 @@
 comp-test
 =========
 
-Proof of concept to test alternative fixes for github.com/segmentio/kafka-go/zstd's leaky impl.
+Proof of concept to test alternative fixes for github.com/segmentio/kafka-go/zstd's leak.
 
 Uses strings made up of UUIDs as data to compress (not great for compression).
 
