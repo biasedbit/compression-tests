@@ -7,7 +7,7 @@ import (
 	"sync"
 
 	zstdlib "github.com/klauspost/compress/zstd"
-	"github.com/segmentio/kafka-go"
+	kafka "github.com/segmentio/kafka-go"
 )
 
 func init() {
@@ -39,7 +39,7 @@ func (c *CompressionCodec) NewReader(r io.Reader) io.ReadCloser {
 	p := new(reader)
 	if cached := decPool.Get(); cached == nil {
 		p.dec, p.err = zstdlib.NewReader(r)
-		runtime.SetFinalizer(p, func(r *reader) { r.dec.Close() })
+		runtime.SetFinalizer(p, finalizeReader)
 	} else {
 		p = cached.(*reader)
 		p.err = p.dec.Reset(r)
@@ -47,18 +47,19 @@ func (c *CompressionCodec) NewReader(r io.Reader) io.ReadCloser {
 	return p
 }
 
-//var decPool = NewPool(100)
 var decPool sync.Pool
 
 type reader struct {
-	id  int
 	dec *zstdlib.Decoder
 	err error
 }
 
 // Close implements the io.Closer interface.
 func (r *reader) Close() error {
-	decPool.Put(r)
+	if r.dec != nil {
+		r.err = io.ErrClosedPipe
+		decPool.Put(r)
+	}
 	return nil
 }
 
@@ -126,31 +127,9 @@ func (w *writer) ReadFrom(r io.Reader) (n int64, err error) {
 	return w.enc.ReadFrom(r)
 }
 
-type Pool struct {
-	pool chan *zstdlib.Decoder
-}
-
-func NewPool(max int) *Pool {
-	return &Pool{
-		pool: make(chan *zstdlib.Decoder, max),
-	}
-}
-
-// returning interface{} just to match sync.Pool
-func (p *Pool) Get() interface{} {
-	select {
-	case c := <-p.pool:
-		return c
-	default:
-		return nil
-	}
-}
-
-func (p *Pool) Put(c *zstdlib.Decoder) {
-	select {
-	case p.pool <- c:
-	default:
-		// no space left in pool; discard decoder
-		c.Close()
+// finalizeReader closes underlying resources managed by a reader.
+func finalizeReader(r *reader) {
+	if r.dec != nil {
+		r.dec.Close()
 	}
 }

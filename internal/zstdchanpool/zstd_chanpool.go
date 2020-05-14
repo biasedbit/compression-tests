@@ -48,7 +48,6 @@ func (c *CompressionCodec) NewReader(r io.Reader) io.ReadCloser {
 var decPool = NewPool(100)
 
 type reader struct {
-	id  int
 	dec *zstdlib.Decoder
 	err error
 }
