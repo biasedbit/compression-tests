@@ -45,7 +45,7 @@ Leaks goroutines, performance degrades over time.
 
 * Throughput vol: ~1GB/s
 * Compression ratio: 1.60-1.70
-* # goroutines: 1600++
+* Goroutines: 1600++
 * Memory: 4.5GB++
 
 #### zstd-fixed
@@ -54,7 +54,7 @@ Performance holds steady over time.
 
 * Throughput vol: ~1GB/s
 * Compression ratio: 1.60-1.70
-* # goroutines: 1600-1700
+* Goroutines: 1600-1700
 * Memory: 4.5-6.5GB
 
 #### zstd-chanpool
@@ -63,7 +63,7 @@ This pool never downsizes and holds strong references to decoders, so they're al
 
 * Throughput vol: ~900MB/s
 * Compression ratio: 1.60-1.70
-* # goroutines: 1600-1700
+* Goroutines: 1600-1700
 * Memory: 4.5-6.5GB
 
 #### zstd-old
@@ -72,5 +72,5 @@ By far the fastest, with lowest footprint.
 
 * Throughput vol: 1.4-1.5GB/s
 * Compression ratio: 1.86
-* # goroutines: 205
+* Goroutines: 205
 * Memory: <10MB
